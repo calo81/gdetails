@@ -12,6 +12,8 @@ class Github
 
   def self.find_user(organization, name)
     members = Organization.where(:name => organization).first['github_members']
+    return {} if members.nil?
+
     member = members.select do |member|
       member['name'].downcase == name.downcase
     end
@@ -30,6 +32,8 @@ class Github
       member_details_json = RestClient.get(USER_URL.gsub(":user", member['login']))
       JSON.parse(member_details_json)
     end
+  rescue => e
+    puts "Error #{e.message} but continuing"
   end
 
   def self.last_name(name)
