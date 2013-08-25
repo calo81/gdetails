@@ -52,6 +52,11 @@ class GDetails < Sinatra::Base
     "You need to visit a organization specific page like:  /xxxx  where xxxx is the name of the organization"
   end
 
+  get '/logout' do
+    session.clear
+    redirect '/'
+  end
+
   get '/:org' do
     if Organization.find_by(:name => params[:org]).nil?
       raise "Organization #{params[:org]} doesn't exist. Create it first. You can use a CURL command like: curl --data \"logo_url=http://www.#{params[:org]}.co.uk/docroot/img/logo_sb.gif\" http://localhost:4567/#{params[:org]}"
@@ -80,10 +85,7 @@ class GDetails < Sinatra::Base
     haml :dashboard
   end
 
-  get '/logout' do
-    session.clear
-    redirect '/'
-  end
+
 
   post '/:org' do
     if Organization.find_by(:name => params[:org])
