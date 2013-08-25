@@ -1,8 +1,14 @@
 require 'rest_client'
 require 'json'
 class Github
-  ORG_MEMBERS_URL = "https://api.github.com/orgs/:org/members?access_token=6d4ce5b59bdc7671c8d58cd2ae2c410d49129b1e"
-  USER_URL = "https://api.github.com/users/:user?access_token=6d4ce5b59bdc7671c8d58cd2ae2c410d49129b1e"
+  ORG_MEMBERS_URL = "https://api.github.com/orgs/:org/members?access_token=:auth_token"
+  USER_URL = "https://api.github.com/users/:user?access_token=:auth_token"
+
+  def self.auth_token=(token)
+    # deliberately changing constant
+    ORG_MEMBERS_URL.gsub!(":auth_token", token)
+    USER_URL.gsub!(":auth_token", token)
+  end
 
   def self.find_user(organization, name)
     members = Organization.where(:name => organization).first['github_members']

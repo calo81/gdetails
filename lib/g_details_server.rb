@@ -12,11 +12,21 @@ Mongoid.raise_not_found_error = false
 
 class GDetails < Sinatra::Base
   use Rack::Session::Cookie
-  use OmniAuth::Strategies::GoogleOauth2, "812142009790.apps.googleusercontent.com", "B6F0Ben7aGuwMGtHtqdom3kM", :scope => "userinfo.email, userinfo.profile, plus.me", :prompt => :select_account
+  use OmniAuth::Strategies::GoogleOauth2, "812142009790.apps.googleusercontent.com", "B6F0Ben7aGuwMGtHtqdom3kM", :scope => "userinfo.email, userinfo.profile, plus.login, plus.me, plus.circles.write", :prompt => :select_account
 
   set :session_secret, '123123123'
   disable :protection
   enable :sessions
+
+
+  configure :development do
+    Github.auth_token = '6d4ce5b59bdc7671c8d58cd2ae2c410d49129b1e'
+    RestClient.log = STDOUT
+  end
+
+  configure :production do
+    Github.auth_token = 'e539782f2fa949437e7b13a151cf86798999e2f7'
+  end
 
   get '/auth/:provider/callback' do
     user_hash = request.env['omniauth.auth']
@@ -65,6 +75,11 @@ class GDetails < Sinatra::Base
     @people = Person.where(organization: params[:org])
     @organization = Organization.find_by(:name => params[:org])
     haml :dashboard
+  end
+
+  get '/logout' do
+    session.clear
+    redirect '/'
   end
 
   post '/:org' do
