@@ -90,6 +90,11 @@ class GDetails < Sinatra::Base
     end
   end
 
+  error do
+    @error = request.env['sinatra_error'].name
+    haml :'500'
+  end
+
 end
 
 
