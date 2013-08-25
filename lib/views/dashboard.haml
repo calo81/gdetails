@@ -1,0 +1,24 @@
+%link(rel="stylesheet" type="text/css" href="/styles/hcard.css")
+%div
+  %h3
+    %img{:src => @organization.logo_url}
+
+- @people.each do |person|
+  .contact
+    .vcard
+      %table
+        %tr
+          %td
+            %div		
+              %img{:class => 'photo', :src => person.picture, :height => '42', :width => '42'}
+          %td
+            %div{:class => 'fn'}
+              = person.name
+            %div{:class => 'email'}
+              = person.email
+            %div
+              %a{:href => person.github_url, :target => "_blank"}
+                = "@#{person.github_name}"
+		    
+     
+      

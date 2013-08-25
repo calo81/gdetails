@@ -1,0 +1,7 @@
+.contact {width: 10%; background-color: beige; float: left; margin: 5px;}
+.contact * {color:#46464a; font-size:11px;}
+.contact .orglogo {display:none;}
+.contact .photo {margin:11px 20px 0 11px !important;}
+.contact .fn {font-weight:bold; font-family:"Lucida Sans","Lucida Sans Unicode","Lucida Grande",sans-serif; margin:8px 10px 0 0; font-size:12px;}
+.contact .email a {padding-top:5px; display:inline-block;}
+.contact .email a, .contact .homePage a {color:#46464a;}
