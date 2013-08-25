@@ -13,7 +13,12 @@ class Github
   def self.find_user(organization, name)
     members = Organization.where(:name => organization).first['github_members']
     member = members.select do |member|
-      member['name'] == name
+      member['name'].downcase == name.downcase
+    end
+    if members.empty
+      member = members.select do |member|
+        last_name(member['name']) == name.downcase or last_name(member['name']) == last_name(name) or member['name'] == last_name(name)
+      end
     end
     member.empty? ? {} : member[0]
   end
@@ -24,6 +29,13 @@ class Github
     members.map do |member|
       member_details_json = RestClient.get(USER_URL.gsub(":user", member['login']))
       JSON.parse(member_details_json)
+    end
+  end
+
+  def self.last_name(name)
+    names = name.split(" ")
+    if names.size > 1
+      return names[1].downcase
     end
   end
 end
