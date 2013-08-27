@@ -11,10 +11,12 @@ class Github
   end
 
   def self.find_user(organization, name)
+    return {} if(name == nil or name.empty?)
     members = Organization.where(:name => organization).first['github_members']
     return {} if members.nil?
 
     member = members.select do |member|
+      return {} if(member['name'] == nil or member['name'].empty?)
       member['name'].downcase == name.downcase
     end
     if members.empty
