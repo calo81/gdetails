@@ -19,7 +19,7 @@ class Github
       return {} if(member['name'] == nil or member['name'].empty?)
       member['name'].downcase == name.downcase
     end
-    if members.empty
+    if member.empty?
       member = members.select do |member|
         last_name(member['name']) == name.downcase or last_name(member['name']) == last_name(name) or member['name'] == last_name(name)
       end
