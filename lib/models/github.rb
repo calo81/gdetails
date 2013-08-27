@@ -25,7 +25,7 @@ class Github
         last_name(member['name']) == name.downcase or last_name(member['name']) == last_name(name) or member['name'] == last_name(name)
       end
     end
-    member_found.empty? ? {} : member[0]
+    member_found.empty? ? {} : member_found[0]
   end
 
   def self.members(organization)
