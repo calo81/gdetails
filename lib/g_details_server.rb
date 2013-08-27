@@ -23,12 +23,12 @@ class GDetails < Sinatra::Base
     load(File.dirname(__FILE__)+"/../.env")
     Github.auth_token = ENV['GITHUB_AUTH_TOKEN']
     RestClient.log = STDOUT
-    use OmniAuth::Strategies::GoogleOauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], :scope => "userinfo.email, userinfo.profile, plus.login, plus.me, plus.circles.write", :prompt => :select_account
+    use OmniAuth::Strategies::GoogleOauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], :scope => "userinfo.email, userinfo.profile", :prompt => :select_account
   end
 
   configure :production do
     Github.auth_token = ENV['GITHUB_AUTH_TOKEN']
-    use OmniAuth::Strategies::GoogleOauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], :scope => "userinfo.email, userinfo.profile, plus.login, plus.me, plus.circles.write", :prompt => :select_account
+    use OmniAuth::Strategies::GoogleOauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], :scope => "userinfo.email, userinfo.profile", :prompt => :select_account
   end
 
   get '/auth/:provider/callback' do
