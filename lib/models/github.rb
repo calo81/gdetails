@@ -15,16 +15,11 @@ class Github
     members = Organization.where(:name => organization).first['github_members']
     return {} if members.nil?
 
-    member = members.select do |member|
-      return {} if(member['name'] == nil or member['name'].empty?)
+    member_found = members.select do |member|
+      return {} if(member['name'].nil? or member['name'].empty?)
       member['name'].downcase == name.downcase
     end
-    if member.empty?
-      member = members.select do |member|
-        last_name(member['name']) == name.downcase or last_name(member['name']) == last_name(name) or member['name'] == last_name(name)
-      end
-    end
-    member.empty? ? {} : member[0]
+    member_found.empty? ? {} : member[0]
   end
 
   def self.members(organization)
