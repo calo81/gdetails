@@ -1,4 +1,4 @@
-.contact {width: 15%; background-color: beige; float: left; margin: 5px;}
+.contact {width: 25%; background-color: beige; float: left; margin: 5px;}
 .contact * {color:#46464a; font-size:11px;}
 .contact .orglogo {display:none;}
 .contact .photo {margin:11px 20px 0 11px !important;}
